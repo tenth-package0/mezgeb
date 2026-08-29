@@ -9,6 +9,10 @@ import '../domain/models.dart';
 import '../platform/android_file_picker.dart';
 import '../security/security_service.dart';
 
+/// Coordinates authentication, persistence, imports, and view navigation.
+///
+/// Widgets observe this controller but storage and encryption remain delegated
+/// to the repository and security services.
 class AppController extends ChangeNotifier {
   AppController({required this.security, required this.settings});
 
