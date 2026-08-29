@@ -92,16 +92,7 @@ class VaultDatabase {
       GROUP BY albums.id
       ORDER BY albums.created_at DESC
     ''');
-    return rows.map((row) {
-      return Album(
-        id: row['id']! as String,
-        name: row['name']! as String,
-        createdAt: DateTime.fromMillisecondsSinceEpoch(
-          row['created_at']! as int,
-        ),
-        itemCount: row['item_count']! as int,
-      );
-    }).toList();
+    return rows.map(_albumFromRow).toList();
   }
 
   Future<List<Album>> loadAlbumsForItem(String itemId) async {
@@ -117,16 +108,7 @@ class VaultDatabase {
       ''',
       [itemId],
     );
-    return rows.map((row) {
-      return Album(
-        id: row['id']! as String,
-        name: row['name']! as String,
-        createdAt: DateTime.fromMillisecondsSinceEpoch(
-          row['created_at']! as int,
-        ),
-        itemCount: row['item_count']! as int,
-      );
-    }).toList();
+    return rows.map(_albumFromRow).toList();
   }
 
   Future<void> createAlbum(Album album) async {
@@ -160,5 +142,14 @@ class VaultDatabase {
         'item_id': itemId,
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
     });
+  }
+
+  static Album _albumFromRow(Map<String, Object?> row) {
+    return Album(
+      id: row['id']! as String,
+      name: row['name']! as String,
+      createdAt: DateTime.fromMillisecondsSinceEpoch(row['created_at']! as int),
+      itemCount: row['item_count']! as int,
+    );
   }
 }
