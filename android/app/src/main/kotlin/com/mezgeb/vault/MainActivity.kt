@@ -28,7 +28,8 @@ class MainActivity : FlutterFragmentActivity() {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "mezgeb/picker").setMethodCallHandler { call, result ->
             when (call.method) {
-                "pickFiles", "pickPhotos" -> launchPhotoPicker(result)
+                "pickPhotos" -> launchPicker(result, "image/*")
+                "pickFiles" -> launchPicker(result, "*/*")
                 "deleteOriginal" -> {
                     val uriString = call.argument<String>("uri")
                     if (uriString != null) runCatching { contentResolver.delete(Uri.parse(uriString), null, null) }
@@ -39,7 +40,7 @@ class MainActivity : FlutterFragmentActivity() {
         }
     }
 
-    private fun launchPhotoPicker(result: MethodChannel.Result) {
+    private fun launchPicker(result: MethodChannel.Result, mimeType: String) {
         if (hasPendingOperation()) {
             result.error("picker_busy", "A picker or camera is already open.", null)
             return
@@ -47,7 +48,7 @@ class MainActivity : FlutterFragmentActivity() {
         pendingPickResult = result
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-            type = "image/*"
+            type = mimeType
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
