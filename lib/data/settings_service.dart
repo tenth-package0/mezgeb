@@ -14,27 +14,35 @@ class SettingsService {
   }
 
   Future<bool> deleteOriginals() async {
-    return (await _storage.read(key: _deleteOriginalsKey)) == 'true';
+    return _readBool(_deleteOriginalsKey);
   }
 
   Future<void> setDeleteOriginals(bool value) async {
-    await _storage.write(key: _deleteOriginalsKey, value: value.toString());
+    await _writeBool(_deleteOriginalsKey, value);
   }
 
   Future<bool> warmNight() async {
-    return (await _storage.read(key: _warmNightKey)) == 'true';
+    return _readBool(_warmNightKey);
   }
 
   Future<void> setWarmNight(bool value) async {
-    await _storage.write(key: _warmNightKey, value: value.toString());
+    await _writeBool(_warmNightKey, value);
   }
 
   Future<bool> introSeen() async {
-    return (await _storage.read(key: _introSeenKey)) == 'true';
+    return _readBool(_introSeenKey);
   }
 
   Future<void> setIntroSeen(bool value) async {
-    await _storage.write(key: _introSeenKey, value: value.toString());
+    await _writeBool(_introSeenKey, value);
+  }
+
+  Future<bool> _readBool(String key) async {
+    return (await _storage.read(key: key)) == 'true';
+  }
+
+  Future<void> _writeBool(String key, bool value) {
+    return _storage.write(key: key, value: value.toString());
   }
 
   static const _themeKey = 'theme_id';
