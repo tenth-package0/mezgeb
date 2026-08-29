@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -21,9 +21,9 @@ enum _Glyph { heart, mosaic, shutter, calendar, fingerprint }
 class _MezgebIntroMontageState extends State<MezgebIntroMontage>
     with TickerProviderStateMixin {
   late final PageController _pageController;
-  late final AnimationController _ambient;   // slow bg drift + orbits
-  late final AnimationController _entrance;  // per-slide staggered entrance
-  late final AnimationController _shimmer;   // greeting + CTA shine sweep
+  late final AnimationController _ambient; // slow bg drift + orbits
+  late final AnimationController _entrance; // per-slide staggered entrance
+  late final AnimationController _shimmer; // greeting + CTA shine sweep
   Timer? _autoTimer;
   int _page = 0;
 
@@ -283,7 +283,7 @@ class _IntroSlideView extends StatelessWidget {
                       // gentle breathing
                       final t =
                           math.sin(ambient.value * math.pi * 2 * 3.5) * 0.5 +
-                              0.5;
+                          0.5;
                       return Transform.scale(
                         scale: 1 + t * 0.035,
                         child: child,
@@ -337,8 +337,7 @@ class _IntroSlideView extends StatelessWidget {
             animation: kickerAnim,
             slideOffset: 0.35,
             child: Container(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
               decoration: BoxDecoration(
                 color: scheme.primary.withValues(alpha: 0.10),
                 borderRadius: BorderRadius.circular(30),
@@ -364,41 +363,41 @@ class _IntroSlideView extends StatelessWidget {
             slideOffset: 0.35,
             child: slide.special
                 ? AnimatedBuilder(
-              animation: shimmer,
-              builder: (context, _) => ShaderMask(
-                shaderCallback: (bounds) {
-                  final dx = (shimmer.value * 2.4 - 0.7) * bounds.width;
-                  return LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      scheme.onSurface,
-                      scheme.primary,
-                      scheme.onSurface,
-                    ],
-                    stops: const [0.32, 0.5, 0.68],
-                    transform: _SlideGradientTransform(dx),
-                  ).createShader(bounds);
-                },
-                child: Text(
-                  slide.title,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.displaySmall?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    height: 1.15,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            )
+                    animation: shimmer,
+                    builder: (context, _) => ShaderMask(
+                      shaderCallback: (bounds) {
+                        final dx = (shimmer.value * 2.4 - 0.7) * bounds.width;
+                        return LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            scheme.onSurface,
+                            scheme.primary,
+                            scheme.onSurface,
+                          ],
+                          stops: const [0.32, 0.5, 0.68],
+                          transform: _SlideGradientTransform(dx),
+                        ).createShader(bounds);
+                      },
+                      child: Text(
+                        slide.title,
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.displaySmall?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          height: 1.15,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
                 : Text(
-              slide.title,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.w800,
-                height: 1.2,
-              ),
-            ),
+                    slide.title,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      height: 1.2,
+                    ),
+                  ),
           ),
           const SizedBox(height: 14),
 
@@ -574,13 +573,11 @@ class _IntroCtaState extends State<_IntroCta> {
                           child: CustomPaint(
                             painter: _ArrowPainter(
                               color: scheme.onPrimary,
-                              nudge: math.sin(
-                                widget.ambient.value *
-                                    math.pi *
-                                    2 *
-                                    4,
-                              ) *
-                                  0.5 +
+                              nudge:
+                                  math.sin(
+                                        widget.ambient.value * math.pi * 2 * 4,
+                                      ) *
+                                      0.5 +
                                   0.5,
                             ),
                           ),
@@ -734,21 +731,24 @@ class _GlyphPainter extends CustomPainter {
     final path = Path()
       ..moveTo(center.dx, center.dy + h * 0.45)
       ..cubicTo(
-        center.dx - w * 0.62, center.dy + h * 0.05,
-        center.dx - w * 0.55, top - h * 0.28,
-        center.dx, top + h * 0.10,
+        center.dx - w * 0.62,
+        center.dy + h * 0.05,
+        center.dx - w * 0.55,
+        top - h * 0.28,
+        center.dx,
+        top + h * 0.10,
       )
       ..cubicTo(
-        center.dx + w * 0.55, top - h * 0.28,
-        center.dx + w * 0.62, center.dy + h * 0.05,
-        center.dx, center.dy + h * 0.45,
+        center.dx + w * 0.55,
+        top - h * 0.28,
+        center.dx + w * 0.62,
+        center.dy + h * 0.05,
+        center.dx,
+        center.dy + h * 0.45,
       )
       ..close();
 
-    canvas.drawPath(
-      path,
-      Paint()..color = color.withValues(alpha: 0.18),
-    );
+    canvas.drawPath(path, Paint()..color = color.withValues(alpha: 0.18));
     canvas.drawPath(
       path,
       Paint()
@@ -916,14 +916,13 @@ class _IntroDots extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: selected
                 ? LinearGradient(
-              colors: [
-                scheme.primary,
-                scheme.primary.withValues(alpha: 0.65),
-              ],
-            )
+                    colors: [
+                      scheme.primary,
+                      scheme.primary.withValues(alpha: 0.65),
+                    ],
+                  )
                 : null,
-            color:
-            selected ? null : scheme.onSurface.withValues(alpha: 0.16),
+            color: selected ? null : scheme.onSurface.withValues(alpha: 0.16),
             borderRadius: BorderRadius.circular(99),
           ),
         );
@@ -960,7 +959,10 @@ class _AmbientPainter extends CustomPainter {
     void blob(Offset center, double radius, Color color, double alpha) {
       final paint = Paint()
         ..shader = RadialGradient(
-          colors: [color.withValues(alpha: alpha), color.withValues(alpha: 0)],
+          colors: [
+            color.withValues(alpha: alpha),
+            color.withValues(alpha: 0),
+          ],
         ).createShader(Rect.fromCircle(center: center, radius: radius));
       canvas.drawCircle(center, radius, paint);
     }
@@ -1003,10 +1005,8 @@ class _AmbientPainter extends CustomPainter {
       final sizeR = 1.0 + rng.nextDouble() * 2.2;
       final y = (baseY + progress * speed) % 1.1 - 0.05;
       final x = baseX + 0.02 * math.sin(t * speed * 2 + i);
-      final fade =
-      (math.sin((y + 0.05) / 1.1 * math.pi)).clamp(0.0, 1.0);
-      particlePaint.color =
-          primary.withValues(alpha: 0.14 * fade);
+      final fade = (math.sin((y + 0.05) / 1.1 * math.pi)).clamp(0.0, 1.0);
+      particlePaint.color = primary.withValues(alpha: 0.14 * fade);
       canvas.drawCircle(
         Offset(x * size.width, (1 - y) * size.height),
         sizeR,
@@ -1034,8 +1034,8 @@ class _AmbientPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _AmbientPainter old) =>
       old.progress != progress ||
-          old.slideIndex != slideIndex ||
-          old.primary != primary;
+      old.slideIndex != slideIndex ||
+      old.primary != primary;
 }
 
 /// Dashed orbiting ring + comet dot around the hero glyph.
