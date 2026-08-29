@@ -7,6 +7,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../domain/models.dart';
+import '../domain/mime_types.dart';
 import '../platform/android_file_picker.dart';
 import '../security/security_service.dart';
 import 'vault_database.dart';
@@ -43,7 +44,7 @@ class VaultRepository {
         VaultItem(
           id: id,
           displayName: file.name,
-          mimeType: file.mimeType ?? _mimeTypeForName(file.name),
+          mimeType: file.mimeType ?? MimeTypes.fromFileName(file.name),
           encryptedFileName: encryptedFileName,
           sizeBytes: bytes.length,
           importedAt: now,
@@ -147,18 +148,5 @@ class VaultRepository {
   String _newId() {
     final random = Random.secure().nextInt(1 << 32);
     return '${DateTime.now().microsecondsSinceEpoch}_$random';
-  }
-
-  String _mimeTypeForName(String name) {
-    final extension = p.extension(name).toLowerCase();
-    return switch (extension) {
-      '.jpg' || '.jpeg' => 'image/jpeg',
-      '.png' => 'image/png',
-      '.webp' => 'image/webp',
-      '.gif' => 'image/gif',
-      '.pdf' => 'application/pdf',
-      '.txt' => 'text/plain',
-      _ => 'application/octet-stream',
-    };
   }
 }
