@@ -42,7 +42,12 @@ class EthiopianCalendar {
     'ጳጉሜ',
   ];
 
-  static String monthName(int month) => monthNames[month - 1];
+  static String monthName(int month) {
+    if (month < 1 || month > monthNames.length) {
+      throw RangeError.range(month, 1, monthNames.length, 'month');
+    }
+    return monthNames[month - 1];
+  }
 
   static EthiopianDate fromGregorian(DateTime date) {
     final jdn = _gregorianToJdn(date.year, date.month, date.day);
