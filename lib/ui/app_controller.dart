@@ -139,14 +139,19 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> importFiles() => importPhotos();
+  Future<void> importFiles() => _importFromPicker(AndroidFilePicker.pickFiles);
 
-  Future<void> importPhotos() async {
+  Future<void> importPhotos() =>
+      _importFromPicker(AndroidFilePicker.pickPhotos);
+
+  Future<void> _importFromPicker(
+    Future<List<PickedVaultFile>> Function() pick,
+  ) async {
     await initialize();
     final repo = _repository;
     if (repo == null) return;
     _externalActivityOpen = true;
-    final files = await AndroidFilePicker.pickPhotos().whenComplete(() {
+    final files = await pick().whenComplete(() {
       _externalActivityOpen = false;
     });
     if (files.isEmpty) return;
