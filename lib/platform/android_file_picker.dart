@@ -25,7 +25,7 @@ class AndroidFilePicker {
   }
 
   static Future<List<PickedVaultFile>> pickFiles() async {
-    final raw = await _channel.invokeListMethod<Object?>('pickPhotos');
+    final raw = await _channel.invokeListMethod<Object?>('pickFiles');
     return _mapPickedFiles(raw);
   }
 
