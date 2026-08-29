@@ -5,6 +5,9 @@ import 'package:cryptography/cryptography.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
+/// Owns authentication state and encryption keys stored outside the vault DB.
+///
+/// PIN material is derived with PBKDF2; raw PINs are never persisted.
 class SecurityService {
   SecurityService({
     FlutterSecureStorage? storage,
