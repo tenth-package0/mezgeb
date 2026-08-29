@@ -30,6 +30,14 @@ flutter test
 flutter build apk --debug
 ```
 
+Format and analyze changes before opening a pull request:
+
+```sh
+dart format --output=none --set-exit-if-changed lib test
+flutter analyze
+flutter test
+```
+
 The debug APK is built at:
 
 ```text
