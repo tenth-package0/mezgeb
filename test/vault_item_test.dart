@@ -20,7 +20,13 @@ void main() {
     expect(restored.mimeType, item.mimeType);
     expect(restored.encryptedFileName, item.encryptedFileName);
     expect(restored.sizeBytes, item.sizeBytes);
-    expect(restored.importedAt, item.importedAt);
-    expect(restored.capturedAt, item.capturedAt);
+    expect(
+      restored.importedAt.millisecondsSinceEpoch,
+      item.importedAt.millisecondsSinceEpoch,
+    );
+    expect(
+      restored.capturedAt.millisecondsSinceEpoch,
+      item.capturedAt.millisecondsSinceEpoch,
+    );
   });
 }
