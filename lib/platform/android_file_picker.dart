@@ -18,14 +18,17 @@ class PickedVaultFile {
 
 class AndroidFilePicker {
   static const _channel = MethodChannel('mezgeb/picker');
+  static const _pickPhotosMethod = 'pickPhotos';
+  static const _pickFilesMethod = 'pickFiles';
+  static const _deleteOriginalMethod = 'deleteOriginal';
 
   static Future<List<PickedVaultFile>> pickPhotos() async {
-    final raw = await _channel.invokeListMethod<Object?>('pickPhotos');
+    final raw = await _channel.invokeListMethod<Object?>(_pickPhotosMethod);
     return _mapPickedFiles(raw);
   }
 
   static Future<List<PickedVaultFile>> pickFiles() async {
-    final raw = await _channel.invokeListMethod<Object?>('pickFiles');
+    final raw = await _channel.invokeListMethod<Object?>(_pickFilesMethod);
     return _mapPickedFiles(raw);
   }
 
@@ -54,6 +57,6 @@ class AndroidFilePicker {
   }
 
   static Future<void> deleteOriginal(String uri) async {
-    await _channel.invokeMethod<void>('deleteOriginal', {'uri': uri});
+    await _channel.invokeMethod<void>(_deleteOriginalMethod, {'uri': uri});
   }
 }
