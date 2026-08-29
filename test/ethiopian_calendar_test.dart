@@ -22,4 +22,9 @@ void main() {
       const EthiopianDate(2011, 13, 6),
     );
   });
+
+  test('month names reject values outside the Ethiopian calendar', () {
+    expect(() => EthiopianCalendar.monthName(0), throwsRangeError);
+    expect(() => EthiopianCalendar.monthName(14), throwsRangeError);
+  });
 }
