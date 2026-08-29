@@ -25,31 +25,39 @@ class VaultItem {
 
   Map<String, Object?> toMap() {
     return {
-      'id': id,
-      'display_name': displayName,
-      'mime_type': mimeType,
-      'encrypted_file_name': encryptedFileName,
-      'size_bytes': sizeBytes,
-      'imported_at': importedAt.millisecondsSinceEpoch,
-      'captured_at': capturedAt.millisecondsSinceEpoch,
+      idColumn: id,
+      displayNameColumn: displayName,
+      mimeTypeColumn: mimeType,
+      encryptedFileNameColumn: encryptedFileName,
+      sizeBytesColumn: sizeBytes,
+      importedAtColumn: importedAt.millisecondsSinceEpoch,
+      capturedAtColumn: capturedAt.millisecondsSinceEpoch,
     };
   }
 
   static VaultItem fromMap(Map<String, Object?> map) {
     return VaultItem(
-      id: map['id']! as String,
-      displayName: map['display_name']! as String,
-      mimeType: map['mime_type']! as String,
-      encryptedFileName: map['encrypted_file_name']! as String,
-      sizeBytes: map['size_bytes']! as int,
+      id: map[idColumn]! as String,
+      displayName: map[displayNameColumn]! as String,
+      mimeType: map[mimeTypeColumn]! as String,
+      encryptedFileName: map[encryptedFileNameColumn]! as String,
+      sizeBytes: map[sizeBytesColumn]! as int,
       importedAt: DateTime.fromMillisecondsSinceEpoch(
-        map['imported_at']! as int,
+        map[importedAtColumn]! as int,
       ),
       capturedAt: DateTime.fromMillisecondsSinceEpoch(
-        map['captured_at']! as int,
+        map[capturedAtColumn]! as int,
       ),
     );
   }
+
+  static const idColumn = 'id';
+  static const displayNameColumn = 'display_name';
+  static const mimeTypeColumn = 'mime_type';
+  static const encryptedFileNameColumn = 'encrypted_file_name';
+  static const sizeBytesColumn = 'size_bytes';
+  static const importedAtColumn = 'imported_at';
+  static const capturedAtColumn = 'captured_at';
 }
 
 class Album {
