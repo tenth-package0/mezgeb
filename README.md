@@ -1,12 +1,36 @@
-# Mezgeb
+# Mezgeb — Private by Default
 
-Mezgeb is an offline-first Flutter app for protecting photos and files locally, with Ethiopian calendar dates and a choice of clean modern themes.
+An offline-first Flutter vault for protecting photos and files locally, organized with Ethiopian calendar dates and a choice of calm, modern themes.
+
+<p align="center">
+  <img src="appi.png" alt="Mezgeb app mark" width="220">
+</p>
+
+<p align="center">
+  <img alt="Flutter" src="https://img.shields.io/badge/Flutter-Android-777761?logo=flutter&logoColor=white">
+  <img alt="Storage" src="https://img.shields.io/badge/storage-offline--first-777761">
+  <img alt="Encryption" src="https://img.shields.io/badge/files-AES--GCM-777761">
+  <img alt="Metadata" src="https://img.shields.io/badge/metadata-SQLCipher-777761">
+</p>
 
 ## Why Mezgeb
 
 Private memories should not require a cloud account. Mezgeb keeps its core vault workflow on the device while adding Ethiopian calendar organization for people who want their files presented in a culturally familiar timeline.
 
 The app does not request internet access, use analytics, show ads, or create user accounts.
+
+## Privacy Boundary
+
+| Layer | Protection |
+| --- | --- |
+| Files | AES-GCM authenticated encryption in app-private storage |
+| Metadata | SQLCipher-backed local database |
+| Key material | Android secure storage |
+| App access | PBKDF2-derived PIN verification and optional device biometrics |
+| Screen content | Screenshots and app-switcher previews blocked with `FLAG_SECURE` |
+| Network | Core vault workflow requires no account or internet connection |
+
+Because screen capture is intentionally blocked by the Android host, this repository does not present staged screenshots as if they came from the secured production surface.
 
 ## Run
 
@@ -69,6 +93,10 @@ build/app/outputs/flutter-apk/app-debug.apk
 - The app locks when moved to the background
 
 This project has not received an independent security audit. Review the implementation and test it carefully before relying on it for irreplaceable or highly sensitive data.
+
+## Verification Status
+
+The current repository passes `flutter analyze` with zero issues and includes eight focused tests covering Ethiopian calendar edge cases, MIME-type fallback behavior, and vault-item database serialization. Android platform behavior—including secure-window flags, biometrics, SQLCipher, and encrypted file I/O—still requires device-level testing.
 
 ## Project Structure
 
