@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mezgeb/domain/mime_types.dart';
-
+   
 void main() {
   test('detects supported file types without case sensitivity', () {
     expect(MimeTypes.fromFileName('portrait.JPEG'), 'image/jpeg');
