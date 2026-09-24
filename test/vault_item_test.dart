@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mezgeb/domain/models.dart';
-
+   
 void main() {
   test('vault items round-trip through database maps', () {
     final item = VaultItem(
